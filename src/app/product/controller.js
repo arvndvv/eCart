@@ -1,5 +1,6 @@
 const productRepository = require('./repository');
 exports.createProduct = async(req, res) => {
+    console.log(req.body)
     try {
         let payload = {
             name: req.body.name,

@@ -5,13 +5,15 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
+app.use(bodyParser.json());
 
+app.use(bodyParser.urlencoded({ extended: true }))
 require("./src/config/mongoose")(app);
 require("./src/app/routerHandler")(app)
 
 app.use(morgan('dev'));
 app.use(cors());
-app.use(bodyParser.json());
+
 app.use(express.static('/files'))
 app.get('/', (req, res) => {
     res.json({
