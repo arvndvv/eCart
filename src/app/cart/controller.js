@@ -135,7 +135,20 @@ exports.subtractItem = async(req, res) => {
         console.log(cart.items);
         const indexFound = cart.items.findIndex(item => item.productId.id === pid);
         if (cart && indexFound !== -1) {
-            cart.items[indexFound].quantity = cart.items[indexFound].quantity - 1;
+            if (cart.items[indexFound].quantity > 1) {
+
+                cart.items[indexFound].quantity = cart.items[indexFound].quantity - 1;
+
+                cart.subTotal = cart.subTotal - cart.items[indexFound].price;
+            } else {
+                let itemToRemove = cart.items.find(item => item.productId.id === pid);
+                // console.log(itemToRemove.quantity)
+
+                cart.subTotal = cart.subTotal - cart.items[indexFound].price;
+
+                cart.items = cart.items.filter(item => item.productId.id !== pid);
+
+            }
             let data = await cart.save();
             res.status(200).json({
                 type: "success",
@@ -143,13 +156,43 @@ exports.subtractItem = async(req, res) => {
                 data: data
             })
 
-            console.log(data)
+            // console.log(data)
         }
 
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({
+            type: "Invalid",
+            msg: "Something went wrong",
+            err: err
+        })
+    }
+}
+exports.removeItem = async(req, res) => {
+    try {
+        const pid = req.params.id;
+        let cart = await cartRepository.cart();
+        // console.log(cart.items);
+        let itemToRemove = cart.items.find(item => item.productId.id === pid);
+        // console.log(itemToRemove.quantity)
+        cart.subTotal = cart.subTotal - itemToRemove.total;
+
+        cart.items = cart.items.filter(item => item.productId.id !== pid);
+
+        if (cart) {
+            // cart.items[indexFound].quantity = 0;
+            await cart.save();
 
 
+            cart = await cartRepository.cart();
+            // console.log(cart)
 
-
+            res.status(200).json({
+                type: "success",
+                msg: "Process Successfull",
+                data: cart
+            })
+        }
     } catch (err) {
         console.log(err);
         res.status(400).json({
