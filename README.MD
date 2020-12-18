@@ -2,17 +2,20 @@
 
 ### localhost:4001/
 
-- method: Get
+###### method: Get
+
 - returns {"message":"Learning Node"}
 
 ### localhost:4001/user/
 
-- method: Get
+###### method: Get
+
 - returns {"msg":"Visit /user/login or /user/register"}
 
 ### localhost:4001/user/register
 
-- method: Post
+###### method: Post
+
 - body: raw, JSON
 - send
   {
@@ -23,7 +26,8 @@
 
 ### localhost:4001/user/login
 
-- method: Post
+###### method: Post
+
 - body: raw, JSON
 - Send
   {
@@ -43,15 +47,83 @@ This is required to authenticate, inorder to use, product and cart.
 
 ### localhost:4001/cart
 
-- method: Get
-  - will show cart
+###### method: Get
 
-### localhost:4001/product
-
-- method: Get
-  - will show products
+- will show cart
 
 ### localhost:4001/cart
 
-- method: Post
-  - will show cart
+###### method: Post
+
+- body: raw, json
+- send
+  {
+  "productId":"Some product iD",
+  "quantity":"any number"
+  }
+
+### localhost:4001/cart/empty-cart
+
+###### method: Delete
+
+- will empty cart
+
+### localhost:4001/cart/subtract/:id
+
+###### method: Delete
+
+- will reduce quantity of the item with the provided id by one.
+
+### localhost:4001/cart/remove/:id
+
+###### method: Delete
+
+- will remove the item from the cart.
+
+### localhost:4001/product
+
+###### method: Get
+
+- will show all products
+
+### localhost:4001/product/:id
+
+###### method: Get
+
+- will show specific product details
+
+### localhost:4001/product
+
+###### method: Post
+
+- will show products
+
+### localhost:4001/product
+
+###### method: Post
+
+- Body- form-data
+- keys: name,price,image
+  values: anyname,anynumber, select any image
+
+##### Response
+
+```
+{
+    "status": true,
+    "data": {
+        "_id": "5fdc9621800aff1e9ed08db6",
+        "name": "latest",
+        "price": "1200",
+        "image": "files/c-logo_1608291873350.png",
+        "__v": 0
+    }
+}
+
+```
+
+### localhost:4001/product/:id
+
+###### method: Delete
+
+- will delete specific product
