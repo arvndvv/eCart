@@ -1,13 +1,15 @@
 require('dotenv').config();
 
 const express = require('express');
+
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+// var jwt = require('jsonwebtoken');
 const app = express();
 app.use(bodyParser.json());
-
-app.use(bodyParser.urlencoded({ extended: true }))
+app.set('secretKey', process.env._JWT_SECRETKEY)
+app.use(bodyParser.urlencoded({ extended: false }))
 require("./src/config/mongoose")(app);
 require("./src/app/routerHandler")(app)
 

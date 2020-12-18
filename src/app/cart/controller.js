@@ -3,17 +3,17 @@ const productRepository = require('../product/repository');
 // const { db } = require('../product/model');
 const cartmodel = require('../cart/model');
 exports.addItemToCart = async(req, res) => {
-    //  console.log(req.body);
+    // console.log(req.body);
     const {
         productId
     } = req.body;
     const quantity = Number.parseInt(req.body.quantity);
     try {
         let cart = await cartRepository.cart();
-        console.log(cart);
+        // console.log(cart);
         let productDetails = await productRepository.productById(productId);
         if (!productDetails) {
-            return res.status(500).json({
+            return res.status(400).json({
                 type: "Not Found",
                 msg: "Invalid request"
             })
@@ -76,7 +76,7 @@ exports.addItemToCart = async(req, res) => {
             res.json(cart);
         }
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(400).json({
             type: "Invalid",
             msg: "Something Went Wrong",
@@ -85,8 +85,10 @@ exports.addItemToCart = async(req, res) => {
     }
 }
 exports.getCart = async(req, res) => {
+
     try {
-        let cart = await cartRepository.cart()
+        let cart = await cartRepository.cart();
+        // console.log(cart)
         if (!cart) {
             return res.status(400).json({
                 type: "Invalid",
@@ -98,8 +100,8 @@ exports.getCart = async(req, res) => {
             data: cart
         })
     } catch (err) {
-        console.log(err);
-        res.status(400).jspn({
+        // console.log(err);
+        res.status(400).json({
             type: "Invalid",
             msg: "Something went wrong",
             err: err
@@ -119,7 +121,7 @@ exports.emptyCart = async(req, res) => {
             data: data
         })
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(400).json({
             type: "Invalid",
             msg: "Something went wrong",
@@ -132,7 +134,7 @@ exports.subtractItem = async(req, res) => {
     try {
         const pid = req.params.id;
         let cart = await cartRepository.cart();
-        console.log(cart.items);
+        // console.log(cart.items);
         const indexFound = cart.items.findIndex(item => item.productId.id === pid);
         if (cart && indexFound !== -1) {
             if (cart.items[indexFound].quantity > 1) {
@@ -160,7 +162,7 @@ exports.subtractItem = async(req, res) => {
         }
 
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(400).json({
             type: "Invalid",
             msg: "Something went wrong",
@@ -194,7 +196,7 @@ exports.removeItem = async(req, res) => {
             })
         }
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(400).json({
             type: "Invalid",
             msg: "Something went wrong",

@@ -1,6 +1,6 @@
 const productRepository = require('./repository');
 exports.createProduct = async(req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     try {
         let payload = {
             name: req.body.name,
@@ -25,6 +25,7 @@ exports.createProduct = async(req, res) => {
 exports.getProducts = async(req, res) => {
     try {
         let products = await productRepository.products();
+
         res.status(200).json({
             status: true,
             data: products
