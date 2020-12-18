@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.static('/files'))
 app.get('/', (req, res) => {
     res.json({
-        message: 'Arise MERN Devs'
+        message: 'Learning Node'
     });
 });
 

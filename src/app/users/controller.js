@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 const regUser = async(req, res) => {
-    // console.log(req.body)
+    console.log(req.body)
     try {
         let payload = {
             name: req.body.name,
@@ -58,9 +58,14 @@ const authUser = async(req, res) => {
     }
 
 }
-
+const informUser = async(req, res) => {
+    res.status(400).json({
+        msg: "Visit /user/login or /user/register"
+    })
+}
 
 module.exports = {
     regUser,
     authUser,
+    informUser
 }
