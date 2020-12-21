@@ -4,13 +4,13 @@ exports.cart = async(uid) => {
 
     try {
 
-        let carts = await Cart.find().populate({
+        let carts = await Cart.find({ "user": { "_id": uid } }).populate({
             path: "items.productId",
             select: "name price"
         }).populate({ path: "user", select: "_id name role" }, );
         // console.log(carts)
         if (carts.length > 0) {
-            carts = carts.filter(cart => cart.user._id == uid);
+            // carts = carts.filter(cart => cart.user._id == uid);
             return carts[0];
         } else {
             throw new Error('Cart is empty')
