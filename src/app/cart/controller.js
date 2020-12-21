@@ -13,19 +13,26 @@ exports.addItemToCart = async(req, res) => {
     } = req.body;
     const quantity = Number.parseInt(req.body.quantity);
     try {
+
         let cart = await cartRepository.cart(userid);
-        console.log(cart);
+        // console.log(cart);
         let productDetails = await productRepository.productById(productId);
+        // console.log(productDetails)
         if (!productDetails) {
             return res.status(400).json({
-                type: "Not Found",
+                type: "Product Details cannot be Fetched",
                 msg: "Invalid request"
             })
         }
         //if cart exist
         if (cart) {
+            // console.log(cart.items);
+
             //check if index exist
             const indexFound = cart.items.findIndex(item => item.productId.id == productId);
+            // console.log(indexFound)
+            // console.log('test');
+
             //this removes an item from the cart if the quantity is set to zero, we can use this method to remove an item from the list ---
             if (indexFound !== -1 && quantity <= 0) {
                 cart.items.splice(indexFound, 1);
@@ -66,7 +73,7 @@ exports.addItemToCart = async(req, res) => {
         }
         // this creates a new cart and then adds the item to the cart that has been created
         else {
-            console.log(userid)
+            // console.log(userid)
             const cartData = {
                 items: [{
                     productId: productId,
@@ -111,7 +118,7 @@ exports.getCart = async(req, res) => {
             data: cart
         })
     } catch (err) {
-        // console.log(err);
+        console.log(err);
         res.status(400).json({
             type: "Invalid",
             msg: "Something went wrong",
