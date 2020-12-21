@@ -21,7 +21,8 @@
   {
   "name":"yourname",
   "email":"your@mail.com",
-  "password":"yourPassword"
+  "password":"yourPassword",
+  "role":"admin/user"
   }
 
 ### localhost:4001/user/login
@@ -49,7 +50,7 @@ This is required to authenticate, inorder to use, product and cart.
 
 ###### method: Get
 
-- will show cart
+- will show cart for logged in user
 
 ### localhost:4001/cart
 
@@ -66,7 +67,7 @@ This is required to authenticate, inorder to use, product and cart.
 
 ###### method: Delete
 
-- will empty cart
+- will empty cart for the loggedin user
 
 ### localhost:4001/cart/subtract/:id
 
@@ -96,12 +97,7 @@ This is required to authenticate, inorder to use, product and cart.
 
 ###### method: Post
 
-- will show products
-
-### localhost:4001/product
-
-###### method: Post
-
+- can add products {restricted access, only person with admin role can access}
 - Body- form-data
 - keys: name,price,image
   values: anyname,anynumber, select any image
@@ -126,4 +122,4 @@ This is required to authenticate, inorder to use, product and cart.
 
 ###### method: Delete
 
-- will delete specific product
+- will delete specific product {restricted access, only person with admin role can access}
