@@ -22,11 +22,16 @@ let ItemSchema = new Schema({
     timestamps: true
 })
 const CartSchema = new Schema({
+
     items: [ItemSchema],
     subTotal: {
         default: 0,
         type: Number
-    }
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
 }, {
     timestamps: true
 })

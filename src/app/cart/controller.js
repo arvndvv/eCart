@@ -1,16 +1,20 @@
 const cartRepository = require('./repository');
 const productRepository = require('../product/repository');
+const jwtDecode = require('jwt-decode');
 // const { db } = require('../product/model');
 const cartmodel = require('../cart/model');
 exports.addItemToCart = async(req, res) => {
-    // console.log(req.body);
+    // console.log(req.headers['x-access-token']);
+    let reqToken = req.headers['x-access-token'];
+    // console.log(jwtDecode(reqToken).id)
+    const userid = jwtDecode(reqToken).id;
     const {
         productId
     } = req.body;
     const quantity = Number.parseInt(req.body.quantity);
     try {
-        let cart = await cartRepository.cart();
-        // console.log(cart);
+        let cart = await cartRepository.cart(userid);
+        console.log(cart);
         let productDetails = await productRepository.productById(productId);
         if (!productDetails) {
             return res.status(400).json({
@@ -44,7 +48,7 @@ exports.addItemToCart = async(req, res) => {
                     total: parseInt(productDetails.price * quantity)
                 });
                 cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
-
+                cart.user = userid;
             }
             //if quantity of price is 0 throw the error
             else {
@@ -62,6 +66,7 @@ exports.addItemToCart = async(req, res) => {
         }
         // this creates a new cart and then adds the item to the cart that has been created
         else {
+            console.log(userid)
             const cartData = {
                 items: [{
                     productId: productId,
@@ -69,7 +74,8 @@ exports.addItemToCart = async(req, res) => {
                     total: parseInt(productDetails.price * quantity),
                     price: productDetails.price
                 }],
-                subTotal: parseInt(productDetails.price * quantity)
+                subTotal: parseInt(productDetails.price * quantity),
+                user: userid
             }
             cart = await cartRepository.addItem(cartData)
                 //let data = await cart.save()
@@ -87,7 +93,12 @@ exports.addItemToCart = async(req, res) => {
 exports.getCart = async(req, res) => {
 
     try {
-        let cart = await cartRepository.cart();
+        // console.log(req.headers['x-access-token']);
+        let reqToken = req.headers['x-access-token'];
+        // console.log(jwtDecode(reqToken).id)
+        const userid = jwtDecode(reqToken).id;
+
+        let cart = await cartRepository.cart(userid);
         // console.log(cart)
         if (!cart) {
             return res.status(400).json({
@@ -110,8 +121,13 @@ exports.getCart = async(req, res) => {
 
 }
 exports.emptyCart = async(req, res) => {
+
     try {
-        let cart = await cartRepository.cart();
+        // console.log(req.headers['x-access-token']);
+        let reqToken = req.headers['x-access-token'];
+        // console.log(jwtDecode(reqToken).id)
+        const userid = jwtDecode(reqToken).id;
+        let cart = await cartRepository.cart(userid);
         cart.items = [];
         cart.subTotal = 0;
         let data = await cart.save();
@@ -132,8 +148,12 @@ exports.emptyCart = async(req, res) => {
 exports.subtractItem = async(req, res) => {
 
     try {
+        // console.log(req.headers['x-access-token']);
+        let reqToken = req.headers['x-access-token'];
+        // console.log(jwtDecode(reqToken).id)
+        const userid = jwtDecode(reqToken).id;
         const pid = req.params.id;
-        let cart = await cartRepository.cart();
+        let cart = await cartRepository.cart(userid);
         // console.log(cart.items);
         const indexFound = cart.items.findIndex(item => item.productId.id === pid);
         if (cart && indexFound !== -1) {
@@ -172,8 +192,12 @@ exports.subtractItem = async(req, res) => {
 }
 exports.removeItem = async(req, res) => {
     try {
+        // console.log(req.headers['x-access-token']);
+        let reqToken = req.headers['x-access-token'];
+        // console.log(jwtDecode(reqToken).id)
+        const userid = jwtDecode(reqToken).id;
         const pid = req.params.id;
-        let cart = await cartRepository.cart();
+        let cart = await cartRepository.cart(userid);
         // console.log(cart.items);
         let itemToRemove = cart.items.find(item => item.productId.id === pid);
         // console.log(itemToRemove.quantity)

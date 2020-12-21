@@ -4,15 +4,17 @@ const addUser = async(payload) => {
     return newUser;
 }
 const findUser = async(payload) => {
-    const products = await userModel.findOne(payload);
-    return products;
+    const user = await userModel.findOne(payload);
+    return user;
 }
 module.exports = {
     addUser,
-    findUser
+    findUser,
+
 }
 
-exports.products = async() => {
-    const products = await Product.find();
-    return products;
-}
+
+// exports.products = async() => {
+//     const products = await Product.find();
+//     return products;
+// }

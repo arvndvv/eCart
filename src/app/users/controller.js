@@ -10,6 +10,7 @@ const regUser = async(req, res) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
+            role: req.body.role,
         }
         let userExist = await userRepo.findUser({ email: req.body.email });
         if (!userExist) {
