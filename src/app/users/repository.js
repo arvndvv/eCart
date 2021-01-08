@@ -1,6 +1,8 @@
 const userModel = require('./model');
 const addUser = async(payload) => {
+    // console.log('repo    ',payload)
     const newUser = await userModel.create(payload);
+    // console.log(newUser);
     return newUser;
 }
 const findUser = async(payload) => {

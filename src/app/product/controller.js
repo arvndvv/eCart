@@ -26,13 +26,11 @@ exports.createProduct = async(req, res) => {
     }
 }
 exports.getProducts = async(req, res) => {
+    // console.log('ss')
     try {
         let products = await productRepository.products();
-
-        res.status(200).json({
-            status: true,
-            data: products
-        })
+//send array of all products
+        res.status(200).send(products)
     } catch (err) {
         console.log(err);
         res.status(500).json({

@@ -39,22 +39,22 @@ const authUser = async(req, res) => {
         let user = await userRepo.findUser({ email: req.body.email });
 
         if (user) {
-            // console.log(user);
+            // console.log(user+'ddd');
             // console.log(bcrypt.compareSync(req.body.password, user.password))
             if (bcrypt.compareSync(req.body.password, user.password)) {
-                const token = jwt.sign({ id: user._id }, req.app.get('secretKey'), { expiresIn: '1h' })
-                res.json({ status: "success", message: "user found!!!", data: { user: user, token: token } });
-            } else {
-                throw new Error('Incorrect Username/Password');
-            }
-        } else {
-            throw new Error('Incorrect Username/Password');
+                const token = jwt.sign({ id: user._id}, req.app.get('secretKey'), { expiresIn: '1h' })
+            //   console.log(token)
+                return res.json({ status: true, message: "user found!!!", token: token, data:{email: user.email,name:user.name,role:user.role}});
+
+                // return;
+            } 
         }
 
+        throw new Error('Incorrect Username/Password');
     } catch (err) {
-        res.status(400).json({
+        res.status(200).json({
             error: err.message,
-            status: false,
+            status: false,  
         })
     }
 
