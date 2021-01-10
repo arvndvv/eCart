@@ -44,12 +44,15 @@ exports.addItemToCart = async(req, res) => {
                 }
             } else if (indexFound !== -1) {
                 cart.items[indexFound].quantity = cart.items[indexFound].quantity + quantity;
+                if (cart.items[indexFound].quantity > 99) {
+                    cart.items[indexFound].quantity=99
+                }
                 cart.items[indexFound].total = cart.items[indexFound].quantity * productDetails.price;
                 cart.items[indexFound].price = productDetails.price;
                 
                 cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
             } //check if quantity is greater than 0 then add item to items array
-            else if (quantity > 0) {
+            else if (quantity > 0 ) {
                 cart.items.push({
                     productId: productId,
                     img:productDetails.image,
