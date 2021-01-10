@@ -52,21 +52,20 @@ const authUser = async(req, res) => {
 
         throw new Error('Incorrect Username/Password');
     } catch (err) {
-        res.status(200).json({
+        res.status(401).json({
             error: err.message,
             status: false,  
         })
     }
 
 }
-const informUser = async(req, res) => {
-    res.status(400).json({
-        msg: "Visit /user/login or /user/register"
-    })
+const bypassLogin = async(req, res) => {
+    res.send(true)
+//    return true
 }
 
 module.exports = {
     regUser,
     authUser,
-    informUser
+    bypassLogin
 }

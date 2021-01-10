@@ -5,6 +5,10 @@ let ItemSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",
     },
+    img:{
+type:String,
+required:true
+    },
     quantity: {
         type: Number,
         required: true,

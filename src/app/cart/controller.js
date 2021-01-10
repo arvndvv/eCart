@@ -18,6 +18,7 @@ exports.addItemToCart = async(req, res) => {
         // console.log(cart);
         let productDetails = await productRepository.productById(productId);
         // console.log(productDetails)
+        // console.log(productDetails)
         if (!productDetails) {
             return res.status(400).json({
                 type: "Product Details cannot be Fetched",
@@ -45,11 +46,13 @@ exports.addItemToCart = async(req, res) => {
                 cart.items[indexFound].quantity = cart.items[indexFound].quantity + quantity;
                 cart.items[indexFound].total = cart.items[indexFound].quantity * productDetails.price;
                 cart.items[indexFound].price = productDetails.price;
+                
                 cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
             } //check if quantity is greater than 0 then add item to items array
             else if (quantity > 0) {
                 cart.items.push({
                     productId: productId,
+                    img:productDetails.image,
                     quantity: quantity,
                     price: productDetails.price,
                     total: parseInt(productDetails.price * quantity)
@@ -77,6 +80,7 @@ exports.addItemToCart = async(req, res) => {
             const cartData = {
                 items: [{
                     productId: productId,
+                    img:productDetails.image,
                     quantity: quantity,
                     total: parseInt(productDetails.price * quantity),
                     price: productDetails.price
@@ -189,7 +193,7 @@ exports.subtractItem = async(req, res) => {
         }
 
     } catch (err) {
-        // console.log(err);
+        console.log(err);
         res.status(400).json({
             type: "Invalid",
             msg: "Something went wrong",
@@ -205,9 +209,8 @@ exports.removeItem = async(req, res) => {
         const userid = jwtDecode(reqToken).id;
         const pid = req.params.id;
         let cart = await cartRepository.cart(userid);
-        // console.log(cart.items);
+        
         let itemToRemove = cart.items.find(item => item.productId.id === pid);
-        // console.log(itemToRemove.quantity)
         cart.subTotal = cart.subTotal - itemToRemove.total;
 
         cart.items = cart.items.filter(item => item.productId.id !== pid);
