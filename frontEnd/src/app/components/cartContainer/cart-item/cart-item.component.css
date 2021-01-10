@@ -1,0 +1,12 @@
+*,
+*:focus,
+*:active {
+  outline: none;
+}
+
+.sub:active {
+  background: #fb5624;
+}
+.add:active {
+  background: #9efb24;
+}

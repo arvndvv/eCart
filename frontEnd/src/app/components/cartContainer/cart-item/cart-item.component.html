@@ -1,0 +1,35 @@
+    <td class="hidden pb-4 md:table-cell">
+     
+      <a href="#">
+        <img src="http://localhost:4000/{{item.img}}" class="w-20 rounded" alt="Thumbnail">
+      </a>
+    </td>
+    <td>
+      <a href="#">
+        <p class="mb-2 md:ml-4">{{item.productId.name}}</p>
+       
+          <button  class="text-gray-700 md:ml-4 hover:text-red-400 transition-all" (click)="removeItem($event)">
+            <small>(Remove item)</small>
+          </button>
+       
+      </a>
+    </td>
+    <td class="justify-center md:justify-end md:table-cell mt-6 " >
+      <div class="w-20 h-10 ml-auto relative">
+        <div class=" flex flex-row w-full h-8 transition-all ease-in font-semibold items-center justify-center  text-gray-700 bg-gray-200 outline-none focus:outline-none hover:text-black focus:text-black rounded-tl-xl rounded-tr-xl rounded-br-xl border-2 rounded-bl-xl">
+          <button class="sub px-3 py-1 rounded-sm bg-red-400 absolute hover:bg-red-600 transition-all ease-in -left-3 text-white font-bold " (click)="reduceQuantity()">-</button>  {{item.quantity}} <button class="add px-3 py-1 rounded-sm bg-green-400 absolute hover:bg-green-600 transition-all ease-in -right-4 text-white font-bold " (click)="increaseQuantity()">+</button> 
+            <!-- <span [(ngmodel)]="item.quantity" 
+          class="w-full font-semibold text-center text-gray-700 bg-gray-200 outline-none focus:outline-none hover:text-black focus:text-black" >{{item.quantity}}</span> -->
+        </div>
+      </div>
+    </td>
+    <td class="hidden text-right md:table-cell">
+      <span class="text-sm lg:text-base font-medium">
+{{item.price|currency:'INR':'symbol':'2.0-0'}}      </span>
+    </td>
+    <td class="text-right">
+      <span class="text-sm lg:text-base font-medium">
+        {{item.total|currency:'INR':'symbol':'2.0-0'}}  
+      </span>
+    </td>
+  
