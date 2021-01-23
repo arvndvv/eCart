@@ -1,5 +1,8 @@
-require('dotenv').config();
-
+// require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+    // if we are on development, load development environmental variables
+    require('dotenv').config()
+}
 const bodyParser = require('body-parser');
 const express = require('express');
 const morgan = require('morgan');
@@ -25,7 +28,7 @@ console.log(__dirname)
 app.use('/files', express.static(path.join(__dirname, 'files')))
 app.use(express.static(path.join(__dirname, 'frontEnd/dist')))
 app.get('/', (req, res) => {
-    res.redirect('/user')
+    res.sendFile(path.join(__dirname, "frontEND/dist/index.html"))
 });
 
 const port = process.env.PORT || 8080;
