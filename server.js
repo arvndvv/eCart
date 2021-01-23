@@ -25,9 +25,7 @@ console.log(__dirname)
 app.use('/files', express.static(path.join(__dirname, 'files')))
 app.use(express.static(path.join(__dirname, 'frontEnd/dist')))
 app.get('/', (req, res) => {
-    res.json({
-        message: 'Learning Node'
-    });
+    res.redirect('/user')
 });
 
 const port = process.env.PORT || 8080;
