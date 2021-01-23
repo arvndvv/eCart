@@ -20,6 +20,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './layout/header/header.component';
 import { CartItemComponent } from './components/cartContainer/cart-item/cart-item.component';
 // import { LotteComponent } from './components/cartContainer/lotte/lotte.component';
+// import * as LottiePlayer from '@lottiefiles/lottie-player';
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
+
+export function playerFactory() {
+  return player;
+}
 
 @NgModule({
   declarations: [
@@ -43,6 +50,8 @@ import { CartItemComponent } from './components/cartContainer/cart-item/cart-ite
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    // LottiePlayer,
+    LottieModule.forRoot({ player: playerFactory }),
   ],
   providers: [
     {

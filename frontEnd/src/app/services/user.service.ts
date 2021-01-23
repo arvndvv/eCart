@@ -24,7 +24,7 @@ let httpOptions = {
   providedIn: 'root',
 })
 export class UserService {
-  userUrl: string = 'http://localhost:4000/user';
+  userUrl: string = '/user';
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -40,7 +40,7 @@ export class UserService {
     // console.log(user);
     return this.http.post<User>(`${this.userUrl}/register`, user, httpOptions);
   }
-  verify(): boolean {
+  async verify() {
     let jwt,
       ret,
       url = 'http://localhost:4000/user/';
@@ -48,23 +48,29 @@ export class UserService {
     if ((jwt = localStorage.getItem('x-access-token'))) {
       // console.log('jwt');
 
-      this.http.get(url).subscribe(
-        async (res) => {
-          // console.log('aa');
-          if (res) {
-            // console.log('aa');
-            return true;
-          }
-        },
-        (err) => {
-          this.toastr.error(err.error.message, 'Error');
-          console.log('asa');
-          localStorage.clear();
+      try {
+        const resp = await this.http.get(url).toPromise();
+        return true;
+      } catch (error) {
+        return false;
+      }
+      // .subscribe(
+      //   async (res) => {
+      //     // console.log('aa');
+      //     if (res) {
+      //       // console.log('aa');
+      //       return true;
+      //     }
+      //   },
+      //   (err) => {
+      //     this.toastr.error(err.error.message, 'Error');
+      //     console.log('asa');
+      //     localStorage.clear();
 
-          this.router.navigateByUrl('login');
-          return false;
-        }
-      );
+      //     this.router.navigateByUrl('login');
+      //     return false;
+      //   }
+      // );
     }
     return false;
   }

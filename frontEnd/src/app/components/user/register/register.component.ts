@@ -17,7 +17,17 @@ export class RegisterComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService,
     private router: Router
-  ) {}
+  ) {
+
+    userService
+    .verify()
+    .then((res) => {
+      if (res) {
+        this.router.navigateByUrl('/products');
+      }
+    })
+    .catch();
+  }
 
   ngOnInit(): void {}
   onReg() {

@@ -13,10 +13,18 @@ export class LoginComponent implements OnInit {
   // num:number=20000.23342;
 
   constructor(private userService: UserService, private router: Router) {
-    if (!userService.verify()) {
-      // console.log('aaaaa');
-      this.router.navigateByUrl('/products');
-    }
+    // if (!userService.verify()) {
+    //   // console.log('aaaaa');
+    //   this.router.navigateByUrl('/products');
+    // }
+    userService
+      .verify()
+      .then((res) => {
+        if (res) {
+          this.router.navigateByUrl('/products');
+        }
+      })
+      .catch();
   }
 
   ngOnInit(): void {}

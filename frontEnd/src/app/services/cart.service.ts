@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class CartService {
-  cartUrl: string = 'http://localhost:4000/cart';
+  cartUrl: string = '/cart';
 
   constructor(private http: HttpClient) {}
   showCart(): Observable<any> {

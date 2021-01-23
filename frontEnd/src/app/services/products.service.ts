@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ProductsService {
-  productsUrl: string = 'http://localhost:4000/product';
-  cartUrl: string = 'http://localhost:4000/cart';
+  productsUrl: string = '/product';
+  cartUrl: string = '/cart';
 
   constructor(private http: HttpClient) {}
   list(): Observable<any> {

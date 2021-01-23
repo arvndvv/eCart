@@ -8,7 +8,7 @@ const cors = require('cors');
 // var jwt = require('jsonwebtoken');
 
 const app = express();
-app.use(cors({origin:true}));
+app.use(cors({ origin: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.set('secretKey', process.env._JWT_SECRETKEY)
@@ -23,13 +23,14 @@ require("./src/app/routerHandler")(app)
 console.log(__dirname)
 
 app.use('/files', express.static(path.join(__dirname, 'files')))
+app.use(express.static(path.join(__dirname, 'frontEnd/dist')))
 app.get('/', (req, res) => {
     res.json({
         message: 'Learning Node'
     });
 });
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
     console.log(`Application is running on ${port}`);

@@ -20,6 +20,8 @@
     "@angular/platform-browser-dynamic": "~11.0.5",
     "@angular/router": "~11.0.5",
     "lottie-player": "^1.0.0",
+    "lottie-web": "^5.7.5",
+    "ngx-lottie": "^6.4.0",
     "ngx-toastr": "^13.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
